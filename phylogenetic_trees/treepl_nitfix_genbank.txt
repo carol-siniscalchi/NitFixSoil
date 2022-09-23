@@ -1,0 +1,61 @@
+treefile = nitfix_total.tre
+smooth = 100
+numsites = 51869
+
+# all crown dates
+mrca = root_crown Juglandaceae_Juglandaceae_Juglans_nigra Leguminosae_Papilionoideae_NPAAA_Trifolium_dasyphyllum
+min = root_crown 112.7 
+max = root_crown 112.7 
+
+mrca = fabales_crown Quillajaceae_Quillaja_saponaria Leguminosae_Papilionoideae_NPAAA_Trifolium_dasyphyllum
+min = fabales_crown 98.7
+max = fabales_crown 98.7
+
+mrca = rosaceae_stem Rosaceae_Dryas_octopetala Rhamnus_tinctoria
+min = rosaceae_stem 98.96
+max = rosaceae_stem 98.96
+
+mrca = moraceae_stem Moraceae_Ficus_cremersii Moraceae_Maclura_tinctoria
+min = moraceae_stem 68.51
+max = moraceae_stem 68.51
+
+mrca = cannabaceae_stem Cannabaceae_Aphananthe_monoica Moraceae_Ficus_cremersii
+min = cannabaceae_stem 73.47
+max = cannabaceae_stem 73.47
+
+mrca = urticaceae_stem Urticaceae_Elatostema_rugosum Urticaceae_Leucosyke_australis
+min = urticaceae_stem 68.51
+max = urticaceae_stem 68.51
+
+mrca = cucurbitales_crown Anisophylleaceae_Combretocarpus_rotundatus Cucurbitaceae_Sicyos_macrophyllus
+min = cucurbitales_crown 64.6
+max = cucurbitales_crown 64.6
+
+mrca = fagales Nothofagaceae_Nothofagus_betuloides Juglandaceae_Juglandaceae_Juglans_nigra
+min = fagales 102.82 
+max = fagales 102.82 
+
+mrca = betulaceae_stem Ticodendraceae_Ticodendron_incognitum Betulaceae_Corylus_avellana
+min = betulaceae_stem 84.77
+max = betulaceae_stem 84.77
+
+mrca = myricaceae_stem Myricaceae_Canacomyrica_monticola Myricaceae_Morella_rubra
+min = myricaceae_stem 68.6
+max = myricaceae_stem 68.6
+
+mrca = casuarinaceae_stem Myricaceae_Canacomyrica_monticola Casuarinaceae_Gymnostoma_nobile
+min = casuarinaceae_stem 84.77
+max = casuarinaceae_stem 84.77
+
+
+outfile = nitfix.total.ultrametric.tre
+
+thorough
+nthreads = 8
+thorough
+opt = 3
+moredetail
+optad = 0
+optcvad = 0
+
+
