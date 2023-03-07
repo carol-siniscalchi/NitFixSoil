@@ -7,12 +7,14 @@ library(geiger)
 library(phytools)
 
 
-setwd("~/Dropbox/postdoc_MSU/linear.models.sep21/")
+setwd("~/Desktop/NitFixSoil-main/") # Change to top-level directory of GitHub repository
 getwd()
+
 
 source("traitDependent_functions.R") # Get from https://github.com/macroevolution/fisse
 
-tree = read.tree("/Users/siniscalchi/Dropbox/Nitrogen_Fixation/fisse/nitfix_rooted_ultrametric.tre")
+tree = read.tree("./phylogenetic_trees/nitfix.finalgenbank_Feb2021_onlygenusspecies_renamed.noduplicates.tre")
+
 
 # Check for ultrametricity and if binary; FiSSE has its own function for ultrametricity but this should be faster and fine with slight precision errors 
 if(is.binary(tree)) {
@@ -35,7 +37,7 @@ library(stringr)
 data$genus <- str_replace(data$genus, "_.*", "")
 
 
-nodulation <- read.csv("new.nod.status.sep21.csv")
+nodulation <- read.csv("./misc/new.nod.status.sep21.csv")
 change_list <- setNames(as.character(nodulation$Genus_Nodulation_Status), as.character(nodulation$Genus))
 
 data$nodulation <- lapply(data$genus, function(x) if(any(!is.na(x))) change_list[x] else NA)
@@ -74,7 +76,7 @@ pval_1tailed
 # in Jun 15:  0.00999001
 # in Sep 2021: 0.04695305
 
-save(pval_1tailed, file = "pval_1tailed.Rdata")
+save(pval_1tailed, file = "./results/pval_1tailed.Rdata")
 
 # pval_2tailed <- min(res$pval, 1-res$pval)*2
 
