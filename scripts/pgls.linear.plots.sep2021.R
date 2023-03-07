@@ -7,23 +7,16 @@ library(ggpubr)
 library(dplyr)
 library(stargazer)
 
-setwd("~/Dropbox/postdoc_MSU/linear.models.sep21/")
+setwd("~/Desktop/NitFixSoil-main/") # Change to top-level directory of GitHub repository
 getwd()
 
-#tree = read.tree("nitfix.finalgenbank_Feb2021_onlygenusspecies_renamed_drop.tre")
-#tree2 = read.tree("nitfix.finalgenbank_Feb2021_onlygenusspecies_renamed.tre")
-#tips <- read.table("tips.txt")
-#prune <- drop.tip(tree, "*remove")
-#cut <- c(tips[,1])
-#prune <- drop.tip(tree, cut)
-#write.tree(prune, file = "nitfix.finalgenbank_Feb2021_onlygenusspecies_renamed_dropped_again.tre")
-#length(unique(prune$tip.label))
+
 
 ###########
 ## Load tree
 ##########
 
-tree = read.tree("nitfix.finalgenbank_Feb2021_onlygenusspecies_renamed.noduplicates.tre")
+tree = read.tree("./phylogenetic_trees/nitfix.finalgenbank_Feb2021_onlygenusspecies_renamed.noduplicates.tre")
 
 
 
@@ -32,67 +25,67 @@ tree = read.tree("nitfix.finalgenbank_Feb2021_onlygenusspecies_renamed.noduplica
 ##########
 
 
-temperature <- read.csv("BIOCLIM_1.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+temperature <- read.csv("./environment_final_species_averages/BIOCLIM_1.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(temperature) <- c("species", "temperature")
 temperature <- distinct(temperature, species, .keep_all= TRUE)
 
-bio3 <- read.table("BIOCLIM_3.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+bio3 <- read.table("./environment_final_species_averages/BIOCLIM_3.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(bio3) <- c("species", "bio3")
 bio3 <- distinct(bio3, species, .keep_all= TRUE)
 
-bio4 <- read.table("BIOCLIM_4.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+bio4 <- read.table("./environment_final_species_averages/BIOCLIM_4.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(bio4) <- c("species", "bio4")
 bio4 <- distinct(bio4, species, .keep_all= TRUE)
 
-precipitation <- read.table("BIOCLIM_12.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+precipitation <- read.table("./environment_final_species_averages/BIOCLIM_12.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(precipitation) <- c("species", "precipitation")
 precipitation <- distinct(precipitation, species, .keep_all= TRUE)
 
-bio15 <- read.table("BIOCLIM_15.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+bio15 <- read.table("./environment_final_species_averages/BIOCLIM_15.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(bio15) <- c("species", "bio15")
 bio15 <- distinct(bio15, species, .keep_all= TRUE)
 
-bio17 <- read.table("BIOCLIM_17.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+bio17 <- read.table("./environment_final_species_averages/BIOCLIM_17.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(bio17) <- c("species", "bio17")
 bio17 <- distinct(bio17, species, .keep_all= TRUE)
 
-elevation <- read.table("GTOPO30_ELEVATION.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+elevation <- read.table("./environment_final_species_averages/GTOPO30_ELEVATION.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(elevation) <- c("species", "elevation")
 elevation <- distinct(elevation, species, .keep_all= TRUE)
 
-nitrogen <- read.table("ISRICSOILGRIDS_new_average_nitrogen_reduced.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+nitrogen <- read.table("./environment_final_species_averages/ISRICSOILGRIDS_new_average_nitrogen_reduced.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(nitrogen) <- c("species", "nitrogen")
 nitrogen <- distinct(nitrogen, species, .keep_all= TRUE)
 
-carbon <- read.table("ISRICSOILGRIDS_new_average_soilorganiccarboncontent_reduced.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+carbon <- read.table("./environment_final_species_averages/ISRICSOILGRIDS_new_average_soilorganiccarboncontent_reduced.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(carbon) <- c("species", "carbon")
 carbon <- distinct(carbon, species, .keep_all= TRUE)
 
-ph <- read.table("ISRICSOILGRIDS_new_average_phx10percent_reduced.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+ph <- read.table("./environment_final_species_averages/ISRICSOILGRIDS_new_average_phx10percent_reduced.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(ph) <- c("species", "ph")
 ph <- distinct(ph, species, .keep_all= TRUE)
 
-coarsefragment <- read.table("ISRICSOILGRIDS_new_average_coarsefragmentpercent_reduced.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+coarsefragment <- read.table("./environment_final_species_averages/ISRICSOILGRIDS_new_average_coarsefragmentpercent_reduced.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(coarsefragment) <- c("species", "coarsefragment")
 coarsefragment <- distinct(coarsefragment, species, .keep_all= TRUE)
 
-sand <- read.table("ISRICSOILGRIDS_new_average_sandpercent_reduced.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+sand <- read.table("./environment_final_species_averages/ISRICSOILGRIDS_new_average_sandpercent_reduced.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(sand) <- c("species", "sand")
 sand <- distinct(sand, species, .keep_all= TRUE)
 
-needleleaf <- read.table("LandCover_1_Needleleaf.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+needleleaf <- read.table("./environment_final_species_averages/LandCover_1_Needleleaf.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(needleleaf) <- c("species", "needleleaf")
 needleleaf <- distinct(needleleaf, species, .keep_all= TRUE)
 
-deciduousbroadleaf <- read.table("LandCover_3_Deciduousbroadleaf.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+deciduousbroadleaf <- read.table("./environment_final_species_averages/LandCover_3_Deciduousbroadleaf.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(deciduousbroadleaf) <- c("species", "deciduousbroadleaf")
 deciduousbroadleaf <- distinct(deciduousbroadleaf, species, .keep_all= TRUE)
 
-herbaceous <- read.table("LandCover_6_Herbaceous.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+herbaceous <- read.table("./environment_final_species_averages/LandCover_6_Herbaceous.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(herbaceous) <- c("species", "herbaceous")
 herbaceous <- distinct(herbaceous, species, .keep_all= TRUE)
 
-aridity <- read.table("aridity_index_UNEP.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
+aridity <- read.table("./environment_final_species_averages/aridity_index_UNEP.average.final.csv", header = FALSE, stringsAsFactors = FALSE, row.names = NULL, sep = "\t")
 colnames(aridity) <- c("species", "aridity")
 aridity <- distinct(aridity, species, .keep_all= TRUE)
 
@@ -117,7 +110,7 @@ combined$genus <- combined$species
 combined$genus <- str_replace(combined$genus, "_.*", "")
 
 #add nodulation status, type and subfamily
-nodulation <- read.csv("new.nod.status.sep21.csv")
+nodulation <- read.csv("./misc/new.nod.status.sep21.csv")
 change_list <- setNames(as.character(nodulation$Genus_Nodulation_Status), as.character(nodulation$Genus))
 combined$nodulation <- lapply(combined$genus, function(x) if(any(!is.na(x))) change_list[x] else NA)
 
@@ -156,7 +149,7 @@ colnames(data.reduced) = c(colnames(combined.fixed))
 data.reduced$nodulation <- as.factor(data.reduced$nodulation)
 data.reduced$nodulationtype <- as.factor(data.reduced$nodulationtype)
 
-write.csv(data.reduced, file = "all.layers.combined.sep21.csv")
+write.csv(data.reduced, file = "./results/all.layers.combined.sep21.csv")
 
 
 
@@ -222,7 +215,7 @@ sandtype.plot <- ggplot(data.reduced, aes(x = nodulationtype, y = sand, fill = n
 temtype.plot <- ggplot(data.reduced, aes(x = nodulationtype, y = temperature, fill = nodulationtype)) + geom_violin(trim = TRUE) + ylim(min(data.reduced$temperature), (max(data.reduced$temperature))) + scale_fill_brewer(palette="BrBG") + theme(legend.position="none")
 
 
-pdf(file="envVSnodtype.pdf", width = 20, height = 20)
+pdf(file="./results/envVSnodtype.pdf", width = 20, height = 20)
 ggarrange(aritype.plot, bio3type.plot, bio4type.plot, bio15type.plot, bio17type.plot, carbtype.plot, coartype.plot, dectype.plot, eletype.plot, herbtype.plot, needtype.plot, nittype.plot, phtype.plot, prectype.plot, sandtype.plot, temtype.plot, ncol = 4, nrow = 4)
 dev.off()
 
@@ -314,38 +307,38 @@ lines(xnit, ynit)
 #data_object <- comparative.data(tree.reduced, data.reduced, species, vcv=FALSE) # To check structure of data is right
 data_object <- comparative.data(tree.reduced, data.reduced, species, vcv=TRUE)
 # Save this object -- takes a long time to calculate
-save(data_object, file = "combined_pgls_object.Rdata")
+save(data_object, file = "./results/combined_pgls_object.Rdata")
 # load("~/Desktop/dating_quick/treePL_ultrametric_smoothing100/caper_object_all.robject")
 
 # Test whether nodulators differ in several environmental factors
 #temperature
 model1 <- pgls(formula = as.numeric(temperature) ~ nodulation, data = data_object)
-save(model1, file = "temperature_pgls_model.Rdata")
+save(model1, file = "./results/temperature_pgls_model.Rdata")
 summary(model1)
 
 #precipitation
 model2 <- pgls(formula = as.numeric(precipitation) ~ nodulation, data = data_object)
-save(model2, file = "precipitation_pgls_model.Rdata")
+save(model2, file = "./results/precipitation_pgls_model.Rdata")
 summary(model2)
 
 #elevation
 model3 <- pgls(formula = as.numeric(elevation) ~ nodulation, data = data_object)
-save(model3, file = "elevation_pgls_model.Rdata")
+save(model3, file = "./results/elevation_pgls_model.Rdata")
 summary(model3)
 
 #nitrogen
 model4 <- pgls(formula = as.numeric(nitrogen) ~ nodulation, data = data_object)
-save(model4, file = "nitrogen_pgls_model.Rdata")
+save(model4, file = "./results/nitrogen_pgls_model.Rdata")
 summary(model4)
 
 #carbon
 model5 <- pgls(formula = as.numeric(carbon) ~ nodulation, data = data_object)
-save(model5, file = "carbon_pgls_model.Rdata")
+save(model5, file = "./results/carbon_pgls_model.Rdata")
 summary(model5)
 
 #ph
 model6 <- pgls(formula = as.numeric(ph) ~ nodulation, data = data_object)
-save(model6, file = "ph_pgls_model.Rdata")
+save(model6, file = "./results/ph_pgls_model.Rdata")
 summary(model6)
 
 #aridity
@@ -355,54 +348,48 @@ summary(model7)
 
 #coarsefragment
 model8 <- pgls(formula = as.numeric(coarsefragment) ~ nodulation, data = data_object)
-save(model8, file = "coarsefragment_pgls_model.Rdata")
+save(model8, file = "./results/coarsefragment_pgls_model.Rdata")
 summary(model8)
 
 #sand
 model9 <- pgls(formula = as.numeric(sand) ~ nodulation, data = data_object)
-save(model9, file = "sand_pgls_model.Rdata")
+save(model9, file = "./results/sand_pgls_model.Rdata")
 summary(model9)
 
 #needleleaf
 model10 <- pgls(formula = as.numeric(needleleaf) ~ nodulation, data = data_object)
-save(model10, file = "needleleaf_pgls_model.Rdata")
+save(model10, file = "./results/needleleaf_pgls_model.Rdata")
 summary(model10)
 
 #deciduousbroadleaf
 model11 <- pgls(formula = as.numeric(deciduousbroadleaf) ~ nodulation, data = data_object)
-save(model11, file = "deciduousbroadleaf_pgls_model.Rdata")
+save(model11, file = "./results/deciduousbroadleaf_pgls_model.Rdata")
 summary(model11)
 
 #herbaceous
 model12 <- pgls(formula = as.numeric(herbaceous) ~ nodulation, data = data_object)
-save(model12, file = "herbaceous_pgls_model.Rdata")
+save(model12, file = "./results/herbaceous_pgls_model.Rdata")
 summary(model12)
 
 #bio3
 model13 <- pgls(formula = as.numeric(bio3) ~ nodulation, data = data_object)
-save(model13, file = "bio3_pgls_model.Rdata")
+save(model13, file = "./results/bio3_pgls_model.Rdata")
 summary(model13)
 
 #bio4
 model14 <- pgls(formula = as.numeric(bio4) ~ nodulation, data = data_object)
-save(model14, file = "bio4_pgls_model.Rdata")
+save(model14, file = "./results/bio4_pgls_model.Rdata")
 summary(model14)
 
 #bio15
 model15 <- pgls(formula = as.numeric(bio15) ~ nodulation, data = data_object)
-save(model15, file = "bio15_pgls_model.Rdata")
+save(model15, file = "./results/bio15_pgls_model.Rdata")
 summary(model15)
 
 #bio17
 model16 <- pgls(formula = as.numeric(bio17) ~ nodulation, data = data_object)
-save(model16, file = "bio17_pgls_model.Rdata")
+save(model16, file = "./results/bio17_pgls_model.Rdata")
 summary(model16)
 
-#model <- pgls(formula = as.numeric(temperature) + as.numeric(precipitation) + as.numeric(nitrogen) + as.numeric(carbon) ~ nodulation, data = data_object)
-#summary(model)
-
-# Test if nitrogen is related to the other variables
-#model <- pgls(formula = as.numeric(nitrogen) ~ as.numeric(temperature) + as.numeric(precipitation) + as.numeric(carbon), data = data_object)
-#summary(model)
 
 
