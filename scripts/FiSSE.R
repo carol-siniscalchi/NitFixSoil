@@ -72,61 +72,7 @@ res <- FISSE.binary(tree, traits)
 
 pval_1tailed <- min(res$pval, 1-res$pval)
 pval_1tailed
-# 0.05094905
-# in Jun 15:  0.00999001
-# in Sep 2021: 0.04695305
 
 save(pval_1tailed, file = "./results/pval_1tailed.Rdata")
 
 # pval_2tailed <- min(res$pval, 1-res$pval)*2
-
-
-######
-# HiSSE
-
-library(hisse)
-
-percentsampled <- length(tree$tip.label)/38564 # The denominator The Plant List species total
-
-
-# Back to dataframe
-traits.frame <- as.data.frame(traits)
-traits.frame$names <- names(traits)
-# Reorder column
-traits.frame <- traits.frame[c("names", "traits")]
-
-# Set up
-turnover.anc = c(1,2,3,4) # Full HiSSE
-turnover.anc.null = c(1,1,2,2) # HiSSE with turnover rates the same net turnover (CID-2)
-# eps.anc = c(0,0,0,0) # Yule pure-birth
-eps.anc = c(1,1,2,2) # Different extinction parameters
-# Transition matrix
-trans.rates = TransMatMaker(hidden.states=TRUE)
-trans.rates.nodual = ParDrop(trans.rates, c(3,5,8,10)) # Prevent dual transitions between hidden and observed
-trans.rates.nodual.equal16 = ParEqual(trans.rates.nodual, c(1,6))
-trans.rates.nodual.allequal = ParEqual(trans.rates.nodual, c(1,2,1,3,1,4,1,5,1,6,1,7,1,8)) # Equal rates model
-trans.rates.bisse <- TransMatMaker(hidden.states=FALSE)
-
-full_hisse = hisse(tree, traits.frame, f = c(percentsampled, percentsampled), hidden.states=TRUE, turnover.anc=turnover.anc, eps.anc=eps.anc, trans.rate=trans.rates.nodual.allequal, output.type="net.div")
-bisse <- hisse(tree, traits.frame, hidden.states=FALSE, turnover.anc=turnover.anc, eps.anc=eps.anc, trans.rate=trans.rates.bisse, output.type="net.div")
-cid_2 <- hisse(tree, traits.frame, hidden.states=FALSE, turnover.anc=turnover.anc.null, eps.anc=eps.anc, trans.rate=trans.rates.bisse, output.type="net.div")
-cid_4 <- hisse.null4(tree, traits.frame, f = c(percentsampled, percentsampled), eps.anc=rep(1,8))
-
-df <- data.frame(matrix(ncol = 2, nrow = 0))
-colnames(df) = c("model", "aicc")
-df[1,] = c("full_hisse", full_hisse$AICc)
-df[2,] = c("bisse", bisse$AICc)
-df[3,] = c("cid_2", cid_2$AICc)
-df[4,] = c("cid_4", cid_4$AICc)
-
-library(qpcR) # For quick akaike weights
-df$weights <- akaike.weights(as.numeric(df$aicc))$weights
-
-
-## LRT
-null.logL <- cid_2$loglik
-alternative.logL <- bisse$loglik
-
-# Check degrees of freedom
-pchisq(-2*(null.logL - alternative.logL) ,df=1, lower.tail=FALSE)
-# 0
