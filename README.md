@@ -42,7 +42,10 @@ This folder contains files related to the results:
 * [tip_DR_sep21.csv](https://github.com/carol-siniscalchi/NitFixSoil/blob/main/results/tip_DR_sep21.csv): tip diversification rates per taxon
 
 ### scripts
-
+* DRvsNodulation.R: script to match tip DR with nodulation status, plot violin plots and map DR over the tree
+* FiSSE.R: runs the FiSSE model for nodulation
+* pgls.linear.plots.sep2021.R: master script that, 1- wrangles all environmental layers and combined them into a single object with nodulation status; 2- plots all violin plots of environmental variables against nodulation status and typee; 3- calculate linear models of environmental variables in relation to nodulation; 4- calculate a combined variance-covariance matrix and PGLS for environmental variables in relation to nodulation
+* soil_signal_evolutionarymodels.R: script that fit evolutionary models for environmental variables, contains results of the models in comments
 
 
 

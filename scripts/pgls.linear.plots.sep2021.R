@@ -245,58 +245,6 @@ stargazer(aridity.lin, bio15.lin, bio17.lin, bio3.lin, bio4.lin, carbon.lin, coa
 AIClin <- AIC(aridity.lin, bio15.lin, bio17.lin, bio3.lin, bio4.lin, carbon.lin, coarsefragment.lin, deciduousbroadleaf.lin, elevation.lin, herbaceous.lin, needleleaf.lin, nitrogen.lin, ph.lin, precipitation.lin, sand.lin, temperature.lin)
 extractAIC(aridity.lin)
 
-# logistic models
-aridity.log <- (glm(formula = nodulation ~ aridity, data = data.reduced, family = binomial))
-bio15.log <- (glm(formula = nodulation ~ bio15, data = data.reduced, family = binomial))
-bio17.log <- (glm(formula = nodulation ~ bio17, data = data.reduced, family = binomial))
-bio3.log <- (glm(formula = nodulation ~ bio3, data = data.reduced, family = binomial))
-bio4.log <- (glm(formula = nodulation ~ bio4, data = data.reduced, family = binomial))
-carbon.log <- (glm(formula = nodulation ~ carbon, data = data.reduced, family = binomial))
-coarsefragment.log <- (glm(formula = nodulation ~ coarsefragment, data = data.reduced, family = binomial))
-deciduousbroadleaf.log <- (glm(formula = nodulation ~ deciduousbroadleaf, data = data.reduced, family = binomial))
-elevation.log <- (glm(formula = nodulation ~ elevation, data = data.reduced, family = binomial))
-herbaceous.log <- (glm(formula = nodulation ~ herbaceous, data = data.reduced, family = binomial))
-needleleaf.log <- (glm(formula = nodulation ~ needleleaf, data = data.reduced, family = binomial))
-nitrogen.log <- (glm(formula = nodulation ~ nitrogen, data = data.reduced, family = binomial))
-ph.log <- (glm(formula = nodulation ~ ph, data = data.reduced, family = binomial))
-precipitation.log <- (glm(formula = nodulation ~ precipitation, data = data.reduced, family = binomial))
-sand.log <- (glm(formula = nodulation ~ sand, data = data.reduced, family = binomial))
-temperature.log <- (glm(formula = nodulation ~ temperature, data = data.reduced, family = binomial))
-#summarize models
-stargazer(aridity.log, bio15.log, bio17.log, bio3.log, bio4.log, carbon.log, coarsefragment.log, deciduousbroadleaf.log, elevation.log, herbaceous.log, needleleaf.log, nitrogen.log, ph.log, precipitation.log, sand.log, temperature.log, type ="text", title = "Logistic models", align = TRUE, out = "logistic.txt")
-#calculate AICs
-AIClog <- AIC(aridity.log, bio15.log, bio17.log, bio3.log, bio4.log, carbon.log, coarsefragment.log, deciduousbroadleaf.log, elevation.log, herbaceous.log, needleleaf.log, nitrogen.log, ph.log, precipitation.log, sand.log, temperature.log)
-
-#AIC table
-rows <- c("aridity" ,"bio15" ,"bio17" ,"bio3" ,"bio4" ,"carbon" ,"coarsefragment" ,"deciduousbroadleaf" ,"elevation" ,"herbaceous" ,"needleleaf" ,"nitrogen" ,"ph" ,"precipitation" ,"sand" ,"temperature")
-linear <- c(AIClin$AIC)
-logistic <- c(AIClog$AIC)
-aic.table <- data.frame(rows, linear, logistic)
-aic.table <- data.frame(rows, linear)
-write.csv(aic.table, file = "nitfix.aic.table.csv")
-
-#some plot tests
-
-plot(data.reduced$aridity, data.reduced$nodulation)
-abline((lm(formula = aridity ~ nodulation, data = data.reduced)))
-
-range(data.reduced$aridity)
-xari <- seq(0, 6, 0.01)
-yari <- predict(aridity.log, list(aridity=xari, type = "response" ))
-plot(data.reduced$aridity, data.reduced$nodulation, pch = 16, xlab = "aridity", ylab = "nodulation")
-lines(xari, yari)
-
-range(data.reduced$ph)
-xph <- seq(21, 82, 0.01)
-yph <- predict(ph.log, list(ph=xph, type = "response" ))
-plot(data.reduced$ph, data.reduced$nodulation, pch = 16, xlab = "ph", ylab = "nodulation")
-lines(xph, yph)
-
-range(data.reduced$nitrogen)
-xnit <- seq(0, 1386, 0.01)
-ynit <- predict(nitrogen.log, list(nitrogen=xnit, type = "response" ))
-plot(data.reduced$nitrogen, data.reduced$nodulation, pch = 16, xlab = "nitrogen", ylab = "nodulation")
-lines(xnit, ynit)
 
 ###########
 ## Build PGLS model
